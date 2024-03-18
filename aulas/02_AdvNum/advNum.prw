@@ -1,5 +1,4 @@
 #Include 'Protheus.ch'
-#Include 'Parmtype.ch'
 
 /*/{Protheus.doc} User Function AdvNum
     Jogo de adivinhar numero.
@@ -9,20 +8,21 @@
     @version 1.0
     /*/
 User Function AdvNum()
-    Local nNumero := 50
-    Local nAposta := 0
+    Local nNumero    := Randomize(1,100)
+    Local nAposta    := 0
+    Local nTentativa := 0
 
-    while nNumero != nAposta
-        nNumero := Val(FwInputBox('Escolha um número [1 - 100]',''))
-        if nAposta == nNumero
-            MsgInfo('Você acertou: <b>' + cValToChar(nNumero) + '</b>', 'Fim de jogo.')
-        
-        elseif nAposta > nNumero
-            MsgInfo('Valor alto!', 'Tente novamente...')
-        
-        else
-            MsgInfo('Valor baixo!', 'Tente novamente...')
-        
-        endif
-    end
+    While nAposta != nNumero
+        nAposta := Val(FwInputBox('Escolha um número de [1-100]:',''))
+        If nAposta == nNumero
+            msgInfo('Você acertou! - <b>'+cValtoChar(nAposta)+;
+            '</b> Com <b>'+cValToChar(nTentativa)+'</b> tentativas.','Fim de jogo.')
+        ElseIf nAposta > nNumero
+           msgAlert('Valor muito alto!','Tente novamente...')
+           nTentativa++
+        ElseIf nAposta < nNumero
+           msgAlert('Valor muito baixo!','Tente novamente...')
+           nTentativa++
+        EndIf
+    End
 Return 
